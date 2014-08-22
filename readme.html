@@ -1,0 +1,65 @@
+<html>
+<head>
+</head>
+<body>
+
+<style type="text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div id="header">
+<h1 class="title">Coursera Machine Learning Course</h1>
+<h4 class="author"><em>Student</em></h4>
+<h4 class="date"><em>Friday, August 22, 2014</em></h4>
+</div>
+
+
+<div id="exploratory-data-analysis" class="section level2">
+<h2>Exploratory Data Analysis</h2>
+<p>Loading of the training and test data sets:</p>
+<p>train &lt;- read.csv(“<a href="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv">https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv</a>”, stringsAsFactors=FALSE) test &lt;- read.csv(“<a href="https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv">https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv</a>”, stringsAsFactors=FALSE)</p>
+<p>The test data set used for prediction only contains data rows with the variable “new_window” set to “no”. Hence all rows in the training set containing “new_window”=“yes” were deleted. The resulting training set contained 19.216 rows (observations).</p>
+<p>train &lt;- subset(train, train$new_window==“no”)</p>
+<p>Many variables that did not show any practical significance were elimated: X, user_name, new_window, timestamps, etc.</p>
+<p>Using the following command, all columns that contain only empty values were removed:</p>
+<p>train2 &lt;- Filter(function(x)!all(x==“”), train)</p>
+<p>53 variables were remaining.</p>
+</div>
+<div id="random-forest" class="section level2">
+<h2>Random Forest</h2>
+<p>For this purpose, the randomForest package was used.</p>
+<p>install.packages(“randomForest”) library(randomForest)</p>
+<p>forest &lt;- randomForest(class ~ ., data=train2, ntree=200, nodesize=25) p &lt;- predict(forest, newdata = test)</p>
+<p>All 20 values of the test set were classified correctly.</p>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with --self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
